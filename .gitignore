@@ -3,3 +3,6 @@ secrets.py
 
 # and our sqlite3 databases:
 *.sql
+
+# and venv stuff
+venv/*
