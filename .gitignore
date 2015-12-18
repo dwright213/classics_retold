@@ -1,0 +1,5 @@
+# for now let's ignore our file that has api keys in it:
+secrets.py
+
+# and our sqlite3 databases:
+*.sql
