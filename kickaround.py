@@ -5,9 +5,6 @@ import json
 import imghdr
 import random
 
-#pages = ["0", "4", "8", "12", "16", "20", "24", "28"]
-#page = 0
-#count = 1000
 
 def imageGrab(begin, end, longstring):
 	pages = ["0", "4", "8", "12", "16", "20", "24", "28"]

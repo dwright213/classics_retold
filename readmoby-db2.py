@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 import sqlite3
 import re
 import random
@@ -9,7 +9,7 @@ def readData(z):
 	for row in c.execute(sql, [(z)]):
 		a = (str(row).replace(')','').replace('(','').replace('u\'','').replace("'","").replace('\\n',' ').replace('u"','"')).replace("\\","'")
 		finaltext = a.replace('.,','.').replace('",','"').replace('!,','!').replace('?,','?')
-		
+
 		ism_spotter = bool(re.search('(?i)black?.\W|esquimaux|negro|indian|native|queequeg|race|slave|savage|cannibal|jew|islander|white', finaltext))
 		longest_word = max(finaltext.split(), key=len)
 		propernoun_guard = bool(re.search('[A-Z]', longest_word))
@@ -46,11 +46,9 @@ def readData(z):
 
 			''')
 
-	
+
 
 if __name__ == "__main__":
-	
-
 	conn = sqlite3.connect('moby_sentences.sql')
 	c = conn.cursor()
 	sql = "SELECT sent_text FROM sentences_grabbed WHERE ROWID =?"
@@ -98,6 +96,3 @@ for i in range(150):
 	readData(entry_number)
 	delEntry()
 stopNclean()
-
-
-
