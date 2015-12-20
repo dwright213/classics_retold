@@ -6,3 +6,6 @@ secrets.py
 
 # and venv stuff
 venv/*
+
+# environment variables
+settings.cfg

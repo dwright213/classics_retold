@@ -54,14 +54,15 @@ if __name__ == "__main__":
 	sql = "SELECT sent_text FROM sentences_grabbed WHERE ROWID =?"
 	sql1 = "DELETE FROM sentences_grabbed WHERE ROWID =?"
 	sql2 = "SELECT count(sent_text) AS count FROM sentences_grabbed"
+
 	global entry_list
-	entry_list = []
-	entry_number = 0
-	l = 1
-	finaltext = ''
 	global numberOfrows
-	numberOfrows = 1
+
+	entry_list = []
 	ism_list = ['black', 'negro', 'niger', 'indian', 'native', 'queequeg', 'race', 'slave', 'savage', 'cannibal', 'jew ', 'islander']
+	finaltext = ''
+	entry_number = 0
+	numberOfrows = 1
 
 
 def numberTherows():
