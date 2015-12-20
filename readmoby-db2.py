@@ -2,11 +2,10 @@
 import sqlite3
 import re
 import random
-import morbydreck
 import kickaround
 
 def readData(z):
-	for row in c.execute(sql, [(z)]):
+	for row in c.execute(sql, [
 		a = (str(row).replace(')','').replace('(','').replace('u\'','').replace("'","").replace('\\n',' ').replace('u"','"')).replace("\\","'")
 		finaltext = a.replace('.,','.').replace('",','"').replace('!,','!').replace('?,','?')
 

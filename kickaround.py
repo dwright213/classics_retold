@@ -13,6 +13,8 @@ def imageGrab(begin, end, longstring):
 	while (begin < end):
 		page = random.randrange(0, 7)
 		while page < 8:
+
+
 			if longstring == 'ismflag' or longstring == 'nameflag':
 				resp = requests.get('http://ajax.googleapis.com/ajax/services/search/images?imgtype=hires&v=1.0&as_rights=(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived)&q=dscf+OR+img_+OR+dsc+OR+dsc0+OR+-camera+"' + str(begin) + '&start=' + pages[page])
 			else:
