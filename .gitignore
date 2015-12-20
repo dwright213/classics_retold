@@ -9,3 +9,6 @@ venv/*
 
 # environment variables
 settings.cfg
+
+# images, if for whatever reason they're left over
+images/*

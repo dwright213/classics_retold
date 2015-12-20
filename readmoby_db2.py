@@ -4,6 +4,7 @@ import re
 import random
 import kickaround
 
+
 # def readData(z):
 # 	for row in c.execute(sql, [
 # 		a = (str(row).replace(')','').replace('(','').replace('u\'','').replace("'","").replace('\\n',' ').replace('u"','"')).replace("\\","'")
