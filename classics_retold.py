@@ -10,11 +10,9 @@ import re
 import random
 import imghdr
 import requests
+from imgurpython import ImgurClient
 
-# local modules
-# import kickaround
-# import readmoby_db2
-# import tumblr_poster
+
 
 
 app = Flask(__name__)
@@ -36,13 +34,14 @@ def get_tumblr_info():
 
 @app.route('/images/<search_string>')
 def get_images(search_string):
-    google_api_string = 'http://ajax.googleapis.com/ajax/services/search/images?imgtype=hires&v=1.0&q=dscf+OR+img_+OR+dsc+OR+dsc0+OR+-camera+"' + str(2) + '+OR+' + search_string + '&start=' + str(2)
-    resp = requests.get(google_api_string)
-	#resp = requests.get('http://ajax.googleapis.com/ajax/services/search/images?imgtype=hires&v=1.0&q=istockphotos ' + str(begin) + '&start=' + pages[page])
-	#stick this line in the above to get pretty safe, wikipedia (mostly) images:  &as_rights=(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived)
-	# jsonData = json.loads(resp.text)
-    print google_api_string
-    return str(resp)
+    # fire up the ol' imgur client..
+    client = ImgurClient(app.config['IMGUR_CLIENT_ID'], app.config['IMGUR_CLIENT_SECRET'])
+    results = client.gallery_search(search_string, advanced=None, sort='time', window='all', page=0)
+    results_dict = {}
+    for count, result in enumerate(results):
+        results_dict[count] = str(result.link)
+        print str(result.link)
+    return jsonify(results_dict)
 
 
 if __name__ == "__main__":
