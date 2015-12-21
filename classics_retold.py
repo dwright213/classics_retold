@@ -43,6 +43,24 @@ def get_images(search_string):
         print str(result.link)
     return jsonify(results_dict)
 
+@app.route('/sqlite/count')
+def search_database():
+    conn = sqlite3.connect('moby_sentences.sql')
+    c = conn.cursor()
+    count_entries = "SELECT count(sent_text) AS count FROM sentences_grabbed"
+    sentence_number = c.execute(count_entries).fetchmany()
+    conn.close()
+    return str(sentence_number)
+
+@app.route('/sqlite/get/<record_number>')
+def get_sentence(record_number):
+    conn = sqlite3.connect('moby_sentences.sql')
+    c = conn.cursor()
+    get_sentence = "SELECT * FROM sentences_grabbed WHERE ROWID =?"
+    sentence_got = c.execute(get_sentence,(record_number,)).fetchone()
+    conn.close()
+    return str(sentence_got)
+
 
 if __name__ == "__main__":
     app.debug = True
