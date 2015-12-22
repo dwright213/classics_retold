@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Classics_reTold</title>
+  </head>
+  <body>
+
+  </body>
+</html>
+<body>
+
+<div class=page>
+<p>
+  <h1>
+    Classics_reTold
+  </h1>
+</p>
+  <a href="{{ url_for('home') }}">home</a> |
+  <a href="{{ url_for('count_sentences') }}">count remaining sentences</a> |
+  <a href="{{ url_for('get_tumblr_info') }}">get tumblr info (json)</a>
+
+  <form class="" action="{{ url_for('get_sentence') }}" method="POST">
+    <input name="number" placeholder="sentence number"></input><input type="submit" value="get      ">
+  </form>
+  <form class="" action="{{ url_for('get_images') }}" method="POST">
+    <input name="text" placeholder="search terms for imgur"></input><input type="submit" value="search">
+  </form>
+
+  <div class="container">
+    <hr>
+    <br><br>
+    {% block body %}{% endblock %}
+  </div>
+</body>

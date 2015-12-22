@@ -1,6 +1,6 @@
 # standard libraries
 from IPython import embed
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, url_for, request
 from imgurpython import ImgurClient
 import os
 import json
@@ -29,8 +29,8 @@ app = Flask(__name__)
 app.config.from_pyfile('settings.cfg')
 
 @app.route('/')
-def hello():
-    return app.config['CONSUMER_KEY']
+def home():
+    return render_template('home.html')
 
 @app.route('/tumblr_info')
 def get_tumblr_info():
@@ -42,8 +42,9 @@ def get_tumblr_info():
     )
     return jsonify(client.info())
 
-@app.route('/images/<search_string>')
-def get_images(search_string):
+@app.route('/images', methods=['POST'])
+def get_images():
+    search_string = request.form['text']
     # fire up the ol' imgur client..
     client = ImgurClient(app.config['IMGUR_CLIENT_ID'], app.config['IMGUR_CLIENT_SECRET'])
     results = client.gallery_search(search_string, advanced=None, sort='time', window='all', page=0)
@@ -59,21 +60,21 @@ def count_sentences():
     count_entries = "SELECT count(sent_text) AS count FROM sentences_grabbed"
     sentence_number = c.execute(count_entries).fetchmany()
     sqlite_connect(False)
-    return str(sentence_number)
+    return render_template('count.html', count=sentence_number[0])
 
-@app.route('/sqlite/get/<record_number>')
-def get_sentence(record_number):
+@app.route('/sqlite/get', methods=['POST'])
+def get_sentence():
+    record_number = request.form['number']
     c = sqlite_connect(True)
     get_sentence = "SELECT * FROM sentences_grabbed WHERE ROWID =?"
     sentence_got = c.execute(get_sentence,(record_number,)).fetchone()
     sqlite_connect(False)
-    return str(sentence_got)
+    return render_template('sentence_got.html', sentence=sentence_got)
 
 @app.route('/sqlite/delete/<record_number>')
 def delete_sentence(record_number):
     conn = sqlite3.connect('moby_sentences.practice_delete.sql')
     c = conn.cursor()
-
     delete_sentence = "DELETE FROM sentences_grabbed WHERE ROWID =?"
     c.execute(delete_sentence,(record_number,))
     sqlite_connect(False)
@@ -82,4 +83,4 @@ def delete_sentence(record_number):
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0')
